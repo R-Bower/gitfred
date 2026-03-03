@@ -169,36 +169,6 @@ function fetchParallel(requests) {
 	});
 }
 
-/** @param {string} isoDateStr */
-function humanRelativeDate(isoDateStr) {
-	const deltaMins = (Date.now() - new Date(isoDateStr).getTime()) / 1000 / 60;
-	/** @type {"year"|"month"|"week"|"day"|"hour"|"minute"} */
-	let unit;
-	let delta;
-	if (deltaMins < 60) {
-		unit = "minute";
-		delta = Math.floor(deltaMins);
-	} else if (deltaMins < 60 * 24) {
-		unit = "hour";
-		delta = Math.floor(deltaMins / 60);
-	} else if (deltaMins < 60 * 24 * 7) {
-		unit = "day";
-		delta = Math.floor(deltaMins / 60 / 24);
-	} else if (deltaMins < 60 * 24 * 7 * 4) {
-		unit = "week";
-		delta = Math.floor(deltaMins / 60 / 24 / 7);
-	} else if (deltaMins < 60 * 24 * 7 * 4 * 12) {
-		unit = "month";
-		delta = Math.floor(deltaMins / 60 / 24 / 7 / 4);
-	} else {
-		unit = "year";
-		delta = Math.floor(deltaMins / 60 / 24 / 7 / 4 / 12);
-	}
-	const formatter = new Intl.RelativeTimeFormat("en", { style: "narrow", numeric: "auto" });
-	const str = formatter.format(-delta, unit);
-	return str.replace(/m(?= ago$)/, "min"); // "m" -> "min" (more distinguishable from "month")
-}
-
 /** @param {string|undefined} orgFilterStr */
 function parseOrgFilter(orgFilterStr) {
 	if (!orgFilterStr) return [];
@@ -450,15 +420,10 @@ function run(argv) {
 	const repos = allRepos.map((/** @type {GithubRepo} */ repo) => {
 		// INFO `pushed_at` refers to commits only https://github.com/orgs/community/discussions/24442
 		// CAVEAT `pushed_at` apparently also includes pushes via PR :(
-		const lastUpdated = repo.pushed_at ? humanRelativeDate(repo.pushed_at) : "";
-
 		let type = "";
-		if (repo.fork) type += "🍴 ";
-		if (repo.archived) type += "🗄️ ";
 
 		const subtitleParts = [
 			repo.owner.login,
-			lastUpdated,
 			repo.description,
 		];
 		// Show source indicator when using multiple endpoints
@@ -466,7 +431,7 @@ function run(argv) {
 			const sourceLabel = repo._source === "github.com" ? "GH" : "GHE";
 			subtitleParts.push(`[${sourceLabel}]`);
 		}
-		const subtitle = subtitleParts.filter(Boolean).join("  ·  ");
+		const subtitle = subtitleParts.filter(Boolean).join(" · ");
 
 		let cloneSubtitle = cloneDepth > 0 ? `⌃: Shallow Clone (depth ${cloneDepth})` : "⌃: Clone";
 		if (forkOnClone) cloneSubtitle += " & Fork";
