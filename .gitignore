@@ -1,6 +1,111 @@
-# Mac
-.DS_Store
+###############################################################################
+# Dependency directories
+###############################################################################
+**/node_modules/
 
-# Alfred
-prefs.plist
-*.alfredworkflow
+###############################################################################
+# Build / cache artifacts
+###############################################################################
+dist/
+build/
+out/
+out-tsc/
+bundle-size-dist/
+temp/
+temp-app/
+tmp/
+.temp/
+.sst/
+.build/
+.turbo/
+**/.turbo/**
+.turbo-cache/*
+!.turbo-cache/.gitkeep
+.nx/cache/
+.nx/workspace-data/
+_cdk.context.json
+.cdk.context.json
+packages/**/stats.yml
+packages/**/meta.json
+packages/**/build-metafile.json
+.wireit
+local/
+.cache/
+
+###############################################################################
+# Framework-specific outputs
+###############################################################################
+# Angular
+.angular/
+**/*.angular/cache
+**/.ng-doc/**
+**/ng-doc/**
+ng-doc/
+
+# SvelteKit
+**/*.svelte-kit/output
+
+###############################################################################
+# Documentation & static-site tooling
+###############################################################################
+packages/**/build
+packages/**/generated/**
+!packages/**/generated/.gitkeep
+packages/mcp-server/docs-assets/**
+!packages/mcp-server/docs-assets/react-legacy
+.typedoc
+
+###############################################################################
+# Environment / secrets
+###############################################################################
+.env*
+web/.env
+certs/*.pem
+**/*/certs/**/*.pem
+!certs/artifactory.pem
+env/*.json
+
+###############################################################################
+# Logs & debug info
+###############################################################################
+*.log
+.log*
+yarn-error.log
+.pnpm-debug.log
+.pnpm-debug.log_
+vite*.config.ts.timestamp*
+.eslintcache
+.nyc_output/
+.aiignore
+.aider*
+!.aiderignore
+
+###############################################################################
+# TypeScript incremental build info
+###############################################################################
+tsconfig.tsbuildinfo
+tsconfig.*.tsbuildinfo
+
+###############################################################################
+# Test artifacts & screenshots
+###############################################################################
+**screenshots**
+.react-router/
+**/*\wsl.*
+**/coverage
+
+###############################################################################
+# OS / editor / IDE files
+###############################################################################
+.DS_Store
+.fleet/
+.idea/
+.webstorm/backup
+
+###############################################################################
+# Keep-tracked placeholder
+###############################################################################
+!generated/.gitkeep
+!.idea/bookmarks.json
+!.aider.conf.yml
+!.idea/externalDependencies.xml
