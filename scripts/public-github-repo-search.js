@@ -312,7 +312,7 @@ function run(argv) {
 				},
 			};
 		});
-		return JSON.stringify({ items: recentItems, cache: { seconds: 5, loosereload: true } });
+		return JSON.stringify({ items: recentItems });
 	}
 
 	const configs = getGithubConfigs();
@@ -499,5 +499,5 @@ function run(argv) {
 		};
 	});
 
-	return JSON.stringify({ items: [...recentItems, ...repos], cache: { seconds: 5, loosereload: true } });
+	return JSON.stringify({ items: [...recentItems, ...repos] });
 }
